@@ -60,23 +60,45 @@ namespace NoteQuickFormatter
                         new XAttribute("style", "font-family:'Bradley Hand ITC';font-size:20.0pt"),
                         new XElement(_ns + "T", title)));
         }
-        private XElement GetFormattedPageContentElement()
+        private XElement GetTagDef()
         {
+            XElement tagDef = new XElement(_ns + "TagDef",
+                                new XAttribute("index", 0),
+                                new XAttribute("type", 0),
+                                new XAttribute("symbol", 3),
+                                new XAttribute("name", "待辦事項"));
+            return tagDef;
+        }
+        private XElement GetFormattedPageContentElement(string title)
+        {
+            // 位置是為了符合手動新增時，輸入完標題後按下enter會跳至的位置
             XElement position = new XElement(_ns + "Position",
                         new XAttribute("x", "36.0"),
                         new XAttribute("y", "86.4000015258789"),
                         new XAttribute("z", "0"));
-            // 尺寸目前是隨便設定的
+            // 尺寸是隨便設定的
             XElement size = new XElement(_ns + "Size",
                 new XAttribute("width", "120"),
                 new XAttribute("height", "120")
                 );
-            /* TODO: 建立日期+待辦事項框 */
-            XElement oeChildren = new XElement(_ns + "OEChildren",
-                new XElement(_ns + "OE",
-                new XElement(_ns + "T", "123")
-                ));
+            XElement oeChildren = new XElement(_ns + "OEChildren");
             XElement outline = new XElement(_ns + "Outline", position, size, oeChildren);
+
+            DateTime startDate = DateTimeHelper.ConvertStringToDateTime(title);
+            for (int i = 0; i < 5; i++)
+            {
+                XElement date = new XElement(_ns + "T", startDate.AddDays(i).ToString("M/d"));
+                XElement toDo = new XElement(_ns + "OE",
+                    new XElement(_ns + "Tag",
+                    new XAttribute("index", 0)),
+                    new XElement(_ns + "T"));
+                XElement newLine = new XElement(_ns + "OE", new XElement(_ns + "T"));
+                XElement content = new XElement(_ns + "OEChildren", toDo, newLine);
+                XElement oe = new XElement(_ns + "OE",
+                    date,
+                    content);
+                oeChildren.Add(oe);
+            }
             return outline;
         }
         public void CreateNewSection(string name)
@@ -117,8 +139,9 @@ namespace NoteQuickFormatter
                                    .ToArray();
                 for (int i = 0; i < pageTitles.Count; i++)
                 {
+                    pages[i].Add(GetTagDef());
                     pages[i].Add(GetPageTitleElement(pageTitles[i]));
-                    pages[i].Add(GetFormattedPageContentElement());
+                    pages[i].Add(GetFormattedPageContentElement(pageTitles[i].Split('-')[0]));
                     _oneNote.UpdatePageContent(pages[i].ToString());
                     RefreshHierarchy();
                 }
