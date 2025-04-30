@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using NoteQuickFormatter.Properties;
 
 namespace NoteQuickFormatter
 {
-    public partial class Form1 : Form
+    public partial class NextMonthToDoTemplateDialog : Form
     {
         private readonly OneNoteService _oneNoteService = new OneNoteService();
-        public Form1()
+        private readonly string _months = "Jan;Feb;Mar;Apr;May;Jun;Jul;Aug;Sep;Oct;Nov;Dec";
+        public NextMonthToDoTemplateDialog()
         {
             InitializeComponent();
             _oneNoteService.RefreshHierarchy();
@@ -28,7 +28,7 @@ namespace NoteQuickFormatter
                 comboBox1.Items.AddRange(_oneNoteService.NotebookNames);
                 comboBox1.SelectedText = _oneNoteService.CurrentlyViewedNotebook.Attribute("nickname").Value;
                 int currentMonth = DateTime.Today.Month;
-                string[] months = Settings.Default.Months.Split(';');
+                string[] months = _months.Split(';');
                 textBox1.Text = months[currentMonth];
             }
         }
