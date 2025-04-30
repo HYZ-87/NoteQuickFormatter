@@ -1,4 +1,4 @@
-﻿namespace OneNoteQuickFormatter.Models
+﻿namespace NoteQuickFormatter.Models
 {
     class Notebook
     {

@@ -12,10 +12,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OneNoteQuickFormatter
+namespace NoteQuickFormatter
 {
     [Guid("358F3B33-5284-47D2-AD0B-7338B991CD03"), ProgId("OneNoteQuickFormatter.Class1")]
-    public class Class1 : IDTExtensibility2, IRibbonExtensibility
+    public class AddIn : IDTExtensibility2, IRibbonExtensibility
     {
         protected Application OneNoteApplication { get; set; }
         
@@ -57,7 +57,7 @@ namespace OneNoteQuickFormatter
         // 參考NoteHighlight2016寫法
         public void AddNewSectionButtonClicked(IRibbonControl control)
         {
-            Thread t = new Thread(new ThreadStart(() => System.Windows.Forms.Application.Run(new Form1())));
+            Thread t = new Thread(new ThreadStart(() => System.Windows.Forms.Application.Run(new NextMonthToDoTemplateDialog())));
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
         }

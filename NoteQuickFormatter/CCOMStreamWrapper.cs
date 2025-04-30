@@ -8,7 +8,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 
-namespace OneNoteQuickFormatter
+namespace NoteQuickFormatter
 {
     class CCOMStreamWrapper : IStream
     {

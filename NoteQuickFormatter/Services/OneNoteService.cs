@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.OneNote;
+using NoteQuickFormatter.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace NoteQuickFormatter
 {
-    internal class OneNoteService
+    public class OneNoteService
     {
         private readonly Application _oneNote = new Application();
         private XDocument _doc;
@@ -147,7 +148,19 @@ namespace NoteQuickFormatter
                 }
             }
             /* TODO */
-            catch { }
+            catch (Exception ex)
+            { }
         }
+
+        public string GetPageContent(string id)
+        {
+            _oneNote.GetPageContent(id, out string xml);
+            return xml;
+        }
+    }
+
+    public enum OneNoteSectionColor
+    {
+
     }
 }
