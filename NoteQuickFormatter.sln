@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteQuickFormatter", "NoteQ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteQuickFormatterTests", "NoteQuickFormatterTests\NoteQuickFormatterTests.csproj", "{0707EAE9-8BEE-4D6D-B8D6-1AA8982A0AC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneNoteQuickFormatter", "OneNoteQuickFormatter\OneNoteQuickFormatter.csproj", "{DFA8B735-4028-4953-BB78-671C2DD9B4FD}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{F5D91FD6-F519-3AC5-2EF1-6ADD62B256F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,12 @@ Global
 		{0707EAE9-8BEE-4D6D-B8D6-1AA8982A0AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0707EAE9-8BEE-4D6D-B8D6-1AA8982A0AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0707EAE9-8BEE-4D6D-B8D6-1AA8982A0AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFA8B735-4028-4953-BB78-671C2DD9B4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA8B735-4028-4953-BB78-671C2DD9B4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA8B735-4028-4953-BB78-671C2DD9B4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA8B735-4028-4953-BB78-671C2DD9B4FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D91FD6-F519-3AC5-2EF1-6ADD62B256F6}.Debug|Any CPU.ActiveCfg = Debug
+		{F5D91FD6-F519-3AC5-2EF1-6ADD62B256F6}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

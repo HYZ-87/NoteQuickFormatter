@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" loadImage="GetImage">
+  <ribbon>
+    <tabs>
+      <tab id="tabTest" label="快速模板">
+        <group id="addNewSection" label="模板">
+          <button id="buttonAdd" label="次月待辦事項" size="normal" screentip="新增新的一節，並在其中加入下個月的每週待辦事項模板。" onAction="AddNewSectionButtonClicked"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
