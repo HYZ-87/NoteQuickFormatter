@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace NoteQuickFormatter
 {
-    [Guid("358F3B33-5284-47D2-AD0B-7338B991CD03"), ProgId("OneNoteQuickFormatter.Class1")]
+    [Guid("358F3B33-5284-47D2-AD0B-7338B991CD03"), ProgId("NoteQuickFormatter.AddIn")]
     public class AddIn : IDTExtensibility2, IRibbonExtensibility
     {
         protected Application OneNoteApplication { get; set; }
-        
+
         public IStream GetImage(string imageName)
         {
             MemoryStream mem = new MemoryStream();
             //Properties.Resources.test.Save(mem, ImageFormat.Png);
             return new CCOMStreamWrapper(mem);
         }
-        
+
         public void OnConnection(object Application, ext_ConnectMode ConnectMode, object AddInInst, ref Array custom)
         {
             Application = OneNoteApplication;
@@ -60,6 +60,21 @@ namespace NoteQuickFormatter
             Thread t = new Thread(new ThreadStart(() => System.Windows.Forms.Application.Run(new NextMonthToDoTemplateDialog())));
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
+        }
+
+        public void QuickAddNewSectionButtonClicked(IRibbonControl control)
+        {
+            try
+            { 
+                OneNoteService oneNoteService = new OneNoteService();
+                oneNoteService.RefreshHierarchy();
+                oneNoteService.CreateNewSection();
+            }
+            catch (Exception ex)
+            {
+                /* TODO */
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
     }
 }

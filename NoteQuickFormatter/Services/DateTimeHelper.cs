@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NoteQuickFormatter
 {
     public class DateTimeHelper
     {
+        private readonly DateTimeFormatInfo _dtfi = new CultureInfo("en-US").DateTimeFormat;
+        public string[] AbbreviatedMonthNames { get => _dtfi.AbbreviatedMonthNames; }
         public static List<string> GetWeekdayRanges(int year, int month)
         {
             DateTime date = new DateTime(year, month, 1);

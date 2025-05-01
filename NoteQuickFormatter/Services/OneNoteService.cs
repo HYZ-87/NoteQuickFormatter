@@ -102,6 +102,10 @@ namespace NoteQuickFormatter
             }
             return outline;
         }
+        public void CreateNewSection()
+        {
+            CreateNewSection(new DateTimeHelper().AbbreviatedMonthNames[DateTime.Now.Month % 12]);
+        }
         public void CreateNewSection(string name)
         {
             DateTime day = DateTime.Today.AddMonths(1);
@@ -126,6 +130,7 @@ namespace NoteQuickFormatter
                 CreateNewPages(name, pageTitles);
             }
             /* TODO */
+            // 如果沒有先取得hierarchy，會跳出沒有ns的錯誤
             catch
             { }
         }

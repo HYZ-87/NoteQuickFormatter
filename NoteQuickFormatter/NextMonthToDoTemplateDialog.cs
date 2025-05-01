@@ -8,7 +8,6 @@ namespace NoteQuickFormatter
     public partial class NextMonthToDoTemplateDialog : Form
     {
         private readonly OneNoteService _oneNoteService = new OneNoteService();
-        private readonly string _months = "Jan;Feb;Mar;Apr;May;Jun;Jul;Aug;Sep;Oct;Nov;Dec";
         public NextMonthToDoTemplateDialog()
         {
             InitializeComponent();
@@ -28,8 +27,7 @@ namespace NoteQuickFormatter
                 comboBox1.Items.AddRange(_oneNoteService.NotebookNames);
                 comboBox1.SelectedText = _oneNoteService.CurrentlyViewedNotebook.Attribute("nickname").Value;
                 int currentMonth = DateTime.Today.Month;
-                string[] months = _months.Split(';');
-                textBox1.Text = months[currentMonth];
+                textBox1.Text = new DateTimeHelper().AbbreviatedMonthNames[currentMonth];
             }
         }
         private void button1_Click(object sender, EventArgs e)
