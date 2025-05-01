@@ -108,11 +108,12 @@ namespace NoteQuickFormatter
         }
         public void CreateNewSection(string name)
         {
+            RefreshHierarchy();
             DateTime day = DateTime.Today.AddMonths(1);
             var pageTitles = DateTimeHelper.GetWeekdayRanges(day.Year, day.Month);
             XElement section = new XElement(_ns + "Section",
                 new XAttribute("name", name));
-            RefreshHierarchy();
+
             if (_currentlyViewedNotebook.Elements(_ns + "Section").Contains(section, new ElementNameComparer()))
             {
                 throw new Exception("Already has a section with the same name.");
@@ -128,11 +129,16 @@ namespace NoteQuickFormatter
             {
                 _oneNote.UpdateHierarchy(_doc.ToString());
                 CreateNewPages(name, pageTitles);
+                string id = _currentlyViewedNotebook.Descendants(_ns + "Section")
+                                                    .FirstOrDefault(s => s.Attribute("name").Value == name)
+                                                    .Attribute("ID").Value;
+                _oneNote.NavigateTo(id);
             }
             /* TODO */
             // 如果沒有先取得hierarchy，會跳出沒有ns的錯誤
-            catch
-            { }
+            // 或許會找不到ID?
+            catch(Exception ex)
+            { System.Windows.Forms.MessageBox.Show(ex.Message); }
         }
         public void CreateNewPages(string sectionName, List<string> pageTitles)
         {

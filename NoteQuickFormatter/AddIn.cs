@@ -67,7 +67,6 @@ namespace NoteQuickFormatter
             try
             { 
                 OneNoteService oneNoteService = new OneNoteService();
-                oneNoteService.RefreshHierarchy();
                 oneNoteService.CreateNewSection();
             }
             catch (Exception ex)

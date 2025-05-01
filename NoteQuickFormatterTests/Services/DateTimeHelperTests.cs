@@ -1,6 +1,6 @@
 using NoteQuickFormatter;
 
-namespace NoteQuickFormatterTests;
+namespace NoteQuickFormatterTests.Services;
 
 [TestClass]
 public class DateTimeHelperTests
