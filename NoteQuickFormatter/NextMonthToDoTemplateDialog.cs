@@ -35,6 +35,7 @@ namespace NoteQuickFormatter
             try
             {
                 _oneNoteService.CreateNewSection(textBox1.Text);
+                Close();
             }
             catch (Exception ex)
             {
