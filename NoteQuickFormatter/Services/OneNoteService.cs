@@ -21,6 +21,10 @@ namespace NoteQuickFormatter
         public XElement CurrentlyViewedNotebook => _currentlyViewedNotebook;
         public string[] NotebookNames => _notebooks.Select(n => n.Name).ToArray();
 
+        public OneNoteService()
+        {
+            RefreshHierarchy();
+        }
 
         // notebook -> section -> page
         public void RefreshHierarchy(HierarchyScope scope = HierarchyScope.hsSections)
@@ -104,9 +108,20 @@ namespace NoteQuickFormatter
         }
         public void CreateNewSection()
         {
-            CreateNewSection(new DateTimeHelper().AbbreviatedMonthNames[DateTime.Now.Month % 12]);
+            CreateNewSection(new DateTimeHelper().AbbreviatedMonthNames[DateTime.Now.Month % 12], _currentlyViewedNotebook);
         }
-        public void CreateNewSection(string name)
+        public void CreateNewSection(string name, string notebookName)
+        {
+            var notebook = GetNotebookByNickname(notebookName);
+            CreateNewSection(name, notebook);
+        }
+
+        public XElement GetNotebookByNickname(string nickname)
+        {
+            XElement notebook = _doc.Descendants(_ns + "Notebook").FirstOrDefault(nb => nb.Attribute("nickname").Value == nickname);
+            return notebook;
+        }
+        public void CreateNewSection(string name, XElement notebook)
         {
             RefreshHierarchy();
             DateTime day = DateTime.Today.AddMonths(1);
@@ -114,7 +129,7 @@ namespace NoteQuickFormatter
             XElement section = new XElement(_ns + "Section",
                 new XAttribute("name", name));
 
-            if (_currentlyViewedNotebook.Elements(_ns + "Section").Contains(section, new ElementNameComparer()))
+            if (notebook.Elements(_ns + "Section").Contains(section, new ElementNameComparer()))
             {
                 throw new Exception("Already has a section with the same name.");
             }
@@ -122,31 +137,30 @@ namespace NoteQuickFormatter
             {
                 section.Add(new XElement(_ns + "Page"));
             }
-            _currentlyViewedNotebook.Elements(_ns + "Section")
-                                    .LastOrDefault()
-                                    .AddAfterSelf(section);
+            notebook.Elements(_ns + "Section").LastOrDefault().AddAfterSelf(section);
             try
             {
-                _oneNote.UpdateHierarchy(_doc.ToString());
-                CreateNewPages(name, pageTitles);
-                string id = _currentlyViewedNotebook.Descendants(_ns + "Section")
-                                                    .FirstOrDefault(s => s.Attribute("name").Value == name)
-                                                    .Attribute("ID").Value;
+                _oneNote.UpdateHierarchy(notebook.ToString());
+                RefreshHierarchy(HierarchyScope.hsPages);
+                notebook = GetNotebookByNickname(notebook.Attribute("nickname").Value);
+                AddPageContent(notebook, name, pageTitles);
+                string id = notebook.Elements(_ns + "Section")
+                                    .FirstOrDefault(s => s.Attribute("name").Value == name)
+                                    .Attribute("ID").Value;
                 _oneNote.NavigateTo(id);
             }
             /* TODO */
             // 如果沒有先取得hierarchy，會跳出沒有ns的錯誤
             // 或許會找不到ID?
-            catch(Exception ex)
+            catch (Exception ex)
             { System.Windows.Forms.MessageBox.Show(ex.Message); }
         }
-        public void CreateNewPages(string sectionName, List<string> pageTitles)
+        public void AddPageContent(XElement notebook, string sectionName, List<string> pageTitles)
         {
             try
             {
-                RefreshHierarchy(HierarchyScope.hsPages);
-                XElement section = _doc.Descendants(_ns + "Section")
-                                       .FirstOrDefault(s => s.Attribute("name").Value == sectionName);
+                XElement section = notebook.Elements(_ns + "Section")
+                                           .FirstOrDefault(s => s.Attribute("name").Value == sectionName);
                 var pages = section.Descendants(_ns + "Page")
                                    .ToArray();
                 for (int i = 0; i < pageTitles.Count; i++)
