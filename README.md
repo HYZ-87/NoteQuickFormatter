@@ -2,7 +2,7 @@
 NoteQuickFormatter is an add-in for OneNote that helps you build a section and formatted pages. The format is designed to create daily to-do lists, it creates a new section for the next month and pages for each week within that month. All of these in one click!
 
 ## Request
-The add-in is deseigned for OneNote 2016/2019 64-bit versions. Feel free to adjust my code to meet your needs.
+The add-in is deseigned for OneNote 2016/2019 64-bit versions.
 
 ## Usage
 ### Quick
@@ -19,5 +19,6 @@ The add-in is deseigned for OneNote 2016/2019 64-bit versions. Feel free to adju
 3. Click "OK" to confirm the names.
 4. The formatted pages are created, and OneNote will guide you to the first page of the new section.
 
-## Language
-Please note that the interface is currently in Chinese.
+## Note
+- Please note that the interface is in Chinese by default. An English version has been added to the form, but it hasn't been tested yet.
+- The current font style for title is `Bradley Hand ITC`, and for content it's `Calibri`. This is based on my personal habit. It's adjustable in the code, and related features may be added later.
