@@ -4,6 +4,9 @@ NoteQuickFormatter is an add-in for OneNote that helps you build a section and f
 ## Request
 The add-in is deseigned for OneNote 2016/2019 64-bit versions.
 
+## Install
+Download and run the latest `.msi` file from [releases](https://github.com/pawstocode/NoteQuickFormatter/releases/tag/v1.0.0).
+
 ## Usage
 ### Quick
 <img src="https://github.com/pawstocode/NoteQuickFormatter/blob/e6397544c77dc174e8e38d24f31ce14d474ff3f3/Quick.gif" width="80%">
